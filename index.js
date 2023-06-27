@@ -22,18 +22,15 @@ app.use("/api/v1/todo",todoRouter)
 
 // );
 
-mongoose
-  .connect(process.env.DB_URI, {
+mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-  .then(() => {
+  }).then(() => {
     console.log('Connected to MongoDB');
     app.listen(4000, () => {
       console.log(`Server listening on port 4000`);
     });
-  })
-  .catch((error) => {
+  }).catch((error) => {
     console.error('Failed to connect to MongoDB', error);
   });
 
