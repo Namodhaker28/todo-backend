@@ -15,17 +15,28 @@ const todoRouter = require('./routes/TodoRouter.js')
 app.use("/api/v1",myRouter)
 app.use("/api/v1/todo",todoRouter)
 
-mongoose.connect(
-  process.env.DB_URI,
-  { useNewUrlParser: true,
-      useUnifiedTopology: true,},
-  () => {
-    console.log("mongodb connection successful");
-  }
-);
+// mongoose.connect(
+//   process.env.DB_URI,
+//   { useNewUrlParser: true,
+//       useUnifiedTopology: true,},
 
+// );
 
+mongoose
+  .connect(process.env.DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(4000, () => {
+      console.log(`Server listening on port 4000`);
+    });
+  })
+  .catch((error) => {
+    console.error('Failed to connect to MongoDB', error);
+  });
 
-app.listen(4000, () => {
-  console.log("app listening on port 4000");
-});
+// app.listen(4000, () => {
+//   console.log("app listening on port 4000");
+// });
