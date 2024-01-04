@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
 const mongoose = require("mongoose");
+
 const myRouter = require('./routes/AuthRouter.js')
 const todoRouter = require('./routes/TodoRouter.js')
 
@@ -21,7 +22,7 @@ app.use("/api/v1/todo",todoRouter)
 //       useUnifiedTopology: true,},
 
 // );
-
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

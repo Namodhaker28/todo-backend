@@ -9,8 +9,13 @@ const Authenticate = async (req, res, next) => {
     next();
   }
   const tokenUser = jwt.verify(token, process.env.SECRET_KEY);
-  const user = await User.findById(tokenUser._id).populate("todos").exec();
-  req.user = user;
+  if (!tokenUser) {
+    res.status(401).send("token is expired! please login again");
+  }
+  else {
+    const user = await User.findById(tokenUser._id).populate("todos").exec();
+    req.user = user;
+  }
   next();
 };
 module.exports = Authenticate;
